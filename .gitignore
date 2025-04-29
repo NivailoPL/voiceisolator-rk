@@ -52,3 +52,4 @@ ScaffoldingReadMe.txt
 
 # Ignore secrets if used
 secrets.json
+config.json

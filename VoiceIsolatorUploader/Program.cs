@@ -10,6 +10,25 @@ namespace VoiceIsolatorUploader
         [STAThread]
         static void Main()
         {
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                try
+                {
+                    string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fatal_error.log");
+                    File.AppendAllText(logPath, $"[{DateTime.Now}] Unhandled Exception: {e.ExceptionObject}\n");
+                }
+                catch { }
+            };
+            Application.ThreadException += (sender, e) =>
+            {
+                try
+                {
+                    string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fatal_error.log");
+                    File.AppendAllText(logPath, $"[{DateTime.Now}] ThreadException: {e.Exception}\n");
+                }
+                catch { }
+            };
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
