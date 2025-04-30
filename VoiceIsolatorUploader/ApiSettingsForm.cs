@@ -7,11 +7,14 @@ namespace VoiceIsolatorUploader
 {
     public partial class ApiSettingsForm : Form
     {
-        public ApiSettingsForm()
+        private readonly string appFolder;
+
+        public ApiSettingsForm(string appFolder)
         {
             InitializeComponent();
-            // Wczytaj klucz API z config.json
-            string configPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+            this.appFolder = appFolder;
+            // Wczytaj klucz API z config.json w AppData
+            string configPath = System.IO.Path.Combine(appFolder, "config.json");
             if (System.IO.File.Exists(configPath))
             {
                 try
@@ -41,9 +44,9 @@ namespace VoiceIsolatorUploader
                 errorLabel.ForeColor = System.Drawing.Color.Red;
                 return;
             }
-            // Zapisz do config.json
-            string configPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
-            string loginUntil = "";
+            // Zapisz do config.json w AppData
+            string configPath = System.IO.Path.Combine(appFolder, "config.json");
+            string loginUntil = null;
             if (System.IO.File.Exists(configPath))
             {
                 try

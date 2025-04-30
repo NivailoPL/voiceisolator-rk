@@ -5,19 +5,19 @@ namespace VoiceIsolatorUploader
 {
     public static class TempManager
     {
-        public static string TempFolder => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp");
-
-        public static void EnsureTempFolder()
+        public static void EnsureTempFolder(string appFolder)
         {
-            if (!Directory.Exists(TempFolder))
-                Directory.CreateDirectory(TempFolder);
+            string tempFolder = Path.Combine(appFolder, "temp");
+            if (!Directory.Exists(tempFolder))
+                Directory.CreateDirectory(tempFolder);
         }
 
-        public static void ClearTempFolder()
+        public static void ClearTempFolder(string appFolder)
         {
-            if (Directory.Exists(TempFolder))
+            string tempFolder = Path.Combine(appFolder, "temp");
+            if (Directory.Exists(tempFolder))
             {
-                foreach (var file in Directory.GetFiles(TempFolder))
+                foreach (var file in Directory.GetFiles(tempFolder))
                 {
                     try { File.Delete(file); } catch { }
                 }

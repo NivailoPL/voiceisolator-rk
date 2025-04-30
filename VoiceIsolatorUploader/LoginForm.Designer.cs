@@ -25,10 +25,21 @@ namespace VoiceIsolatorUploader
         private void InitializeComponent()
         {
             this.usernameTextBox = new System.Windows.Forms.TextBox();
+            this.usernameLabel = new System.Windows.Forms.Label();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
+            this.passwordLabel = new System.Windows.Forms.Label();
             this.loginButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // usernameLabel
+            // 
+            this.usernameLabel.AutoSize = true;
+            this.usernameLabel.Location = new System.Drawing.Point(50, 10);
+            this.usernameLabel.Name = "usernameLabel";
+            this.usernameLabel.Size = new System.Drawing.Size(38, 15);
+            this.usernameLabel.TabIndex = 100;
+            this.usernameLabel.Text = "Login";
             // 
             // usernameTextBox
             // 
@@ -38,9 +49,18 @@ namespace VoiceIsolatorUploader
             this.usernameTextBox.Size = new System.Drawing.Size(200, 23);
             this.usernameTextBox.TabIndex = 0;
             // 
+            // passwordLabel
+            // 
+            this.passwordLabel.AutoSize = true;
+            this.passwordLabel.Location = new System.Drawing.Point(50, 55);
+            this.passwordLabel.Name = "passwordLabel";
+            this.passwordLabel.Size = new System.Drawing.Size(41, 15);
+            this.passwordLabel.TabIndex = 101;
+            this.passwordLabel.Text = "Hasło";
+            // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(50, 70);
+            this.passwordTextBox.Location = new System.Drawing.Point(50, 75);
             this.passwordTextBox.Name = "passwordTextBox";
             // this.passwordTextBox.PlaceholderText = "Hasło";
             this.passwordTextBox.Size = new System.Drawing.Size(200, 23);
@@ -49,7 +69,7 @@ namespace VoiceIsolatorUploader
             // 
             // loginButton
             // 
-            this.loginButton.Location = new System.Drawing.Point(50, 110);
+            this.loginButton.Location = new System.Drawing.Point(50, 115);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(200, 30);
             this.loginButton.TabIndex = 2;
@@ -73,7 +93,9 @@ namespace VoiceIsolatorUploader
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.passwordTextBox);
+            this.Controls.Add(this.passwordLabel);
             this.Controls.Add(this.usernameTextBox);
+            this.Controls.Add(this.usernameLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -87,7 +109,9 @@ namespace VoiceIsolatorUploader
         #endregion
 
         private System.Windows.Forms.TextBox usernameTextBox;
+        private System.Windows.Forms.Label usernameLabel;
         private System.Windows.Forms.TextBox passwordTextBox;
+        private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.Button loginButton;
         private System.Windows.Forms.Label errorLabel;
     }

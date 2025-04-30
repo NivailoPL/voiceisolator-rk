@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Text.Json;
+using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
 
 namespace VoiceIsolatorUploader
 {
@@ -30,27 +32,43 @@ namespace VoiceIsolatorUploader
                     client.DefaultRequestHeaders.Add("xi-api-key", apiKey);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    var fileContent = new ByteArrayContent(File.ReadAllBytes(inputFilePath));
-                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("audio/wav"); // lub "audio/mpeg" dla mp3
+                    // Wysyłamy oryginalny plik, pole 'audio', Content-Type na podstawie rozszerzenia
+                    var fileBytes = File.ReadAllBytes(inputFilePath);
+                    var fileContent = new ByteArrayContent(fileBytes);
+                    string ext = Path.GetExtension(inputFilePath).ToLowerInvariant();
+                    if (ext == ".mp3")
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("audio/mpeg");
+                    else if (ext == ".wav")
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("audio/wav");
+                    else
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                     form.Add(fileContent, "audio", Path.GetFileName(inputFilePath));
 
                     var response = await client.PostAsync(endpoint, form);
                     if (!response.IsSuccessStatusCode)
-                    {
-                        string err = await response.Content.ReadAsStringAsync();
-                        return (false, $"Błąd API: {response.StatusCode} {err}", null);
-                    }
+                        return (false, $"Błąd API: {response.StatusCode}", null);
 
-                    // Zapisz plik wynikowy do temp
-                    var contentDisposition = response.Content.Headers.ContentDisposition;
-                    // Nowa nazwa pliku: oryginalna_nazwa-wyizolowany.mp3
+                    // Zapisz plik wynikowy mp3 do temp
                     string baseName = Path.GetFileNameWithoutExtension(inputFilePath);
-                    string outFile = Path.Combine(tempFolder, $"{baseName}-wyizolowany.mp3");
-                    using (var fs = new FileStream(outFile, FileMode.Create, FileAccess.Write))
+                    string outMp3 = Path.Combine(tempFolder, $"{baseName}-wyizolowany.mp3");
+                    using (var fs = new FileStream(outMp3, FileMode.Create, FileAccess.Write))
                     {
                         await response.Content.CopyToAsync(fs);
                     }
-                    return (true, "Plik przetworzony pomyślnie.", outFile);
+
+                    // KONWERSJA MP3 -> WAV (Linear PCM, 16bit, 44100Hz, Mono)
+                    string outWav = Path.Combine(tempFolder, $"{baseName}-wyizolowany.wav");
+                    using (var reader = new Mp3FileReader(outMp3))
+                    {
+                        var outFormat = new WaveFormat(44100, 1); // 44100Hz, Mono, 16bit
+                        using (var resampler = new MediaFoundationResampler(reader, outFormat))
+                        {
+                            resampler.ResamplerQuality = 60;
+                            WaveFileWriter.CreateWaveFile(outWav, resampler);
+                        }
+                    }
+
+                    return (true, "Plik przetworzony i skonwertowany do WAV.", outWav);
                 }
             }
             catch (Exception ex)
@@ -59,9 +77,9 @@ namespace VoiceIsolatorUploader
             }
         }
 
-        public static string GetApiKeyFromConfig()
+        public static string GetApiKeyFromConfig(string appFolder)
         {
-            string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+            string configPath = Path.Combine(appFolder, "config.json");
             if (!File.Exists(configPath)) return null;
             try
             {

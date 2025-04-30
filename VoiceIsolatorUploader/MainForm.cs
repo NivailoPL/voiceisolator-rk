@@ -7,9 +7,12 @@ namespace VoiceIsolatorUploader
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        private readonly string appFolder;
+
+        public MainForm(string appFolder)
         {
             InitializeComponent();
+            this.appFolder = appFolder;
             // Inicjalizacja statusów i logów
             statusLabel.Text = "Krok 1/5";
             UpdateApiStatus();
@@ -29,7 +32,7 @@ namespace VoiceIsolatorUploader
 
         private void UpdateApiStatus()
         {
-            string apiKey = ApiClient.GetApiKeyFromConfig();
+            string apiKey = ApiClient.GetApiKeyFromConfig(appFolder);
             if (!string.IsNullOrEmpty(apiKey))
             {
                 apiStatusLabel.Text = "API: OK!";
@@ -64,7 +67,7 @@ namespace VoiceIsolatorUploader
 
                 statusLabel.Text = "Krok 2/5: Nawiązywanie połączenia z API";
                 logBox.AppendText("Nawiązywanie połączenia z API...\n");
-                string apiKey = ApiClient.GetApiKeyFromConfig();
+                string apiKey = ApiClient.GetApiKeyFromConfig(appFolder);
                 if (string.IsNullOrEmpty(apiKey))
                 {
                     logBox.SelectionColor = System.Drawing.Color.Red;
@@ -79,7 +82,7 @@ namespace VoiceIsolatorUploader
                 logBox.AppendText("Wysyłanie pliku do API...\n");
 
                 var api = new ApiClient(apiKey);
-                var tempFolder = TempManager.TempFolder;
+                var tempFolder = Path.Combine(appFolder, "temp");
                 var (success, msg, outputPath) = await api.IsolateVoiceAsync(filePath, tempFolder);
 
                 if (!success)
@@ -180,13 +183,13 @@ namespace VoiceIsolatorUploader
             dragDropInput.Enabled = true;
             dragDropOutput.Enabled = false;
             dragDropOutput.Tag = null;
-            TempManager.ClearTempFolder();
+            TempManager.ClearTempFolder(appFolder);
             restartButton.Enabled = false;
         }
 
         private void setApiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var apiSettings = new ApiSettingsForm();
+            var apiSettings = new ApiSettingsForm(appFolder);
             if (apiSettings.ShowDialog() == DialogResult.OK)
             {
                 UpdateApiStatus();
