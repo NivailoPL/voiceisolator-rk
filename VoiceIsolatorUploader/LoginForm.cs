@@ -13,7 +13,7 @@ namespace VoiceIsolatorUploader
         {
             InitializeComponent();
     try {
-        this.Icon = new System.Drawing.Icon("Izolator Głosu RK.ico");
+        // Ikona ładowana przez MainForm z folderu Properties
     } catch {}
         }
 

@@ -11,7 +11,7 @@ namespace VoiceIsolatorUploader
 
         public MainForm(string appFolder)
         {
-            // Ustawienie ikony okna
+            // Ustawienie ikony okna z pliku w folderze Properties
             this.Icon = Properties.Resources.AppIcon;
             InitializeComponent();
             this.appFolder = appFolder;
@@ -23,10 +23,7 @@ namespace VoiceIsolatorUploader
             // Najprostsza opcja: ustaw logBox zawsze 5px pod restartButton
             logBox.Location = new System.Drawing.Point(logBox.Location.X, restartButton.Bottom + 5);
 
-            // Ustaw ikonę okna na nową ikonę programu
-            try {
-                this.Icon = new System.Drawing.Icon("Izolator Głosu RK.ico");
-            } catch {}
+
 
             // Przycisk restart domyślnie nieaktywny
             restartButton.Enabled = false;
@@ -114,6 +111,7 @@ namespace VoiceIsolatorUploader
                 }
 
                 statusLabel.Text = "Krok 3/5: Wysyłanie pliku";
+                logBox.SelectionColor = logBox.ForeColor;
                 logBox.AppendText("Wysyłanie pliku do API...\n");
 
                 var api = new ApiClient(apiKey);
@@ -222,6 +220,7 @@ namespace VoiceIsolatorUploader
             dragDropInput.Enabled = true;
             dragDropOutput.Enabled = false;
             dragDropOutput.Tag = null;
+            dragDropOutput.Controls.Clear(); // Usuwa ikonkę i label pliku
             TempManager.ClearTempFolder(appFolder);
             restartButton.Enabled = false;
         }
