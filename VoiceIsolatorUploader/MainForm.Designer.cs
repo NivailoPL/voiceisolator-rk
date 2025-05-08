@@ -6,6 +6,7 @@ namespace VoiceIsolatorUploader
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        
 
         /// <summary>
         /// Clean up any resources being used.
@@ -40,10 +41,10 @@ namespace VoiceIsolatorUploader
             this.dragDropOutput = new System.Windows.Forms.GroupBox();
             this.logBox = new System.Windows.Forms.RichTextBox();
             this.restartButton = new System.Windows.Forms.Button();
-            this.logoPictureBox = new System.Windows.Forms.PictureBox();
+            this.barPictureBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
+
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -110,7 +111,7 @@ namespace VoiceIsolatorUploader
             // dragDropInput
             // 
             this.dragDropInput.AllowDrop = true;
-            this.dragDropInput.Location = new System.Drawing.Point(30, 50);
+            this.dragDropInput.Location = new System.Drawing.Point(30, 100);
             this.dragDropInput.Name = "dragDropInput";
             this.dragDropInput.Size = new System.Drawing.Size(230, 110);
             this.dragDropInput.TabIndex = 2;
@@ -122,7 +123,7 @@ namespace VoiceIsolatorUploader
             // dragDropOutput
             // 
             this.dragDropOutput.AllowDrop = true;
-            this.dragDropOutput.Location = new System.Drawing.Point(270, 50);
+            this.dragDropOutput.Location = new System.Drawing.Point(270, 100);
             this.dragDropOutput.Name = "dragDropOutput";
             this.dragDropOutput.Size = new System.Drawing.Size(230, 110);
             this.dragDropOutput.TabIndex = 3;
@@ -134,16 +135,17 @@ namespace VoiceIsolatorUploader
             // 
             // logBox
             // 
-            this.logBox.Location = new System.Drawing.Point(30, 195);
+            this.logBox.Location = new System.Drawing.Point(30, 245);
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
-            this.logBox.Size = new System.Drawing.Size(470, 160);
+            this.logBox.Size = new System.Drawing.Size(470, 110);
             this.logBox.TabIndex = 4;
             this.logBox.Text = "";
             // 
             // restartButton
             // 
-            this.restartButton.Location = new System.Drawing.Point(0, 150);
+            this.restartButton.Location = new System.Drawing.Point(0, 200);
+
             this.restartButton.Name = "restartButton";
             this.restartButton.Size = new System.Drawing.Size(512, 40);
             this.restartButton.TabIndex = 5;
@@ -154,13 +156,12 @@ namespace VoiceIsolatorUploader
             // 
             // logoPictureBox
             // 
-            this.logoPictureBox.Location = new System.Drawing.Point(5, 27);
-            this.logoPictureBox.Name = "logoPictureBox";
-            this.logoPictureBox.Size = new System.Drawing.Size(30, 30);
-            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.logoPictureBox.TabIndex = 6;
-            this.logoPictureBox.TabStop = false;
-            this.logoPictureBox.Image = global::VoiceIsolatorUploader.Properties.Resources.LogoVI;
+            this.barPictureBox.Location = new System.Drawing.Point(30, 34); // pod menu, przesunięte w prawo i lekko w dół
+this.barPictureBox.Name = "barPictureBox";
+this.barPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+this.barPictureBox.TabIndex = 6;
+this.barPictureBox.TabStop = false;
+this.barPictureBox.Image = global::VoiceIsolatorUploader.Properties.Resources.BAR;
             // 
             // MainForm
             // 
@@ -173,18 +174,18 @@ namespace VoiceIsolatorUploader
             this.Controls.Add(this.dragDropInput);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.logoPictureBox);
+            this.Controls.Add(this.barPictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Voice Isolator Uploader";
+            this.Text = "Izolator Głosu RK";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,6 +205,7 @@ namespace VoiceIsolatorUploader
         private System.Windows.Forms.GroupBox dragDropOutput;
         private System.Windows.Forms.RichTextBox logBox;
         private System.Windows.Forms.Button restartButton;
-        private System.Windows.Forms.PictureBox logoPictureBox;
+        private System.Windows.Forms.PictureBox barPictureBox;
+
     }
 }

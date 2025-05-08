@@ -57,7 +57,10 @@ namespace VoiceIsolatorUploader
                 }
                 catch { }
             }
-            var newConfig = new { api_key = ConfigManager.EncodeApiKey(apiKey), login_saved_until = loginUntil };
+            // Zapisujemy tylko nowy api_key, login_saved_until zostaje bez zmian
+            var newConfig = new System.Collections.Generic.Dictionary<string, string>();
+            newConfig["api_key"] = ConfigManager.EncodeApiKey(apiKey);
+            if (!string.IsNullOrEmpty(loginUntil)) newConfig["login_saved_until"] = loginUntil;
             var json = System.Text.Json.JsonSerializer.Serialize(newConfig);
             System.IO.File.WriteAllText(configPath, json);
             this.DialogResult = DialogResult.OK;

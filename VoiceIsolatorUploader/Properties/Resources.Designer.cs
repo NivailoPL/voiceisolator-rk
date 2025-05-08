@@ -40,5 +40,29 @@ namespace VoiceIsolatorUploader.Properties {
                 return ((Bitmap)(obj));
             }
         }
+        public static System.Drawing.Icon AppIcon {
+            get {
+                object obj = ResourceManager.GetObject("AppIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        public static System.Drawing.Bitmap VO2 {
+            get {
+                object obj = ResourceManager.GetObject("VO2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        public static System.Drawing.Bitmap BAR {
+            get {
+                object obj = ResourceManager.GetObject("BAR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        public static System.Drawing.Image load {
+            get {
+                object obj = ResourceManager.GetObject("load", resourceCulture);
+                return ((System.Drawing.Image)(obj));
+            }
+        }
     }
 }

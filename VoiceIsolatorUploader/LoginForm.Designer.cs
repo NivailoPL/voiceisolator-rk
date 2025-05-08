@@ -30,12 +30,24 @@ namespace VoiceIsolatorUploader
             this.passwordLabel = new System.Windows.Forms.Label();
             this.loginButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
+            this.iconPictureBox = new System.Windows.Forms.PictureBox();
             this.SuspendLayout();
+            this.AcceptButton = this.loginButton;
+            // 
+            // iconPictureBox
+            this.iconPictureBox.Location = new System.Drawing.Point(125, 10);
+            this.iconPictureBox.Name = "iconPictureBox";
+            this.iconPictureBox.Size = new System.Drawing.Size(50, 50);
+            this.iconPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.iconPictureBox.TabIndex = 10;
+            this.iconPictureBox.TabStop = false;
+            this.iconPictureBox.Image = global::VoiceIsolatorUploader.Properties.Resources.VO2;
+            
             // 
             // usernameLabel
             // 
             this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Location = new System.Drawing.Point(50, 10);
+            this.usernameLabel.Location = new System.Drawing.Point(50, 60);
             this.usernameLabel.Name = "usernameLabel";
             this.usernameLabel.Size = new System.Drawing.Size(38, 15);
             this.usernameLabel.TabIndex = 100;
@@ -43,7 +55,7 @@ namespace VoiceIsolatorUploader
             // 
             // usernameTextBox
             // 
-            this.usernameTextBox.Location = new System.Drawing.Point(50, 30);
+            this.usernameTextBox.Location = new System.Drawing.Point(50, 80);
             this.usernameTextBox.Name = "usernameTextBox";
             // this.usernameTextBox.PlaceholderText = "Login";
             this.usernameTextBox.Size = new System.Drawing.Size(200, 23);
@@ -52,7 +64,7 @@ namespace VoiceIsolatorUploader
             // passwordLabel
             // 
             this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(50, 55);
+            this.passwordLabel.Location = new System.Drawing.Point(50, 120);
             this.passwordLabel.Name = "passwordLabel";
             this.passwordLabel.Size = new System.Drawing.Size(41, 15);
             this.passwordLabel.TabIndex = 101;
@@ -60,7 +72,7 @@ namespace VoiceIsolatorUploader
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(50, 75);
+            this.passwordTextBox.Location = new System.Drawing.Point(50, 140);
             this.passwordTextBox.Name = "passwordTextBox";
             // this.passwordTextBox.PlaceholderText = "Hasło";
             this.passwordTextBox.Size = new System.Drawing.Size(200, 23);
@@ -69,7 +81,7 @@ namespace VoiceIsolatorUploader
             // 
             // loginButton
             // 
-            this.loginButton.Location = new System.Drawing.Point(50, 115);
+            this.loginButton.Location = new System.Drawing.Point(50, 180);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(200, 30);
             this.loginButton.TabIndex = 2;
@@ -89,7 +101,8 @@ namespace VoiceIsolatorUploader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 200);
+            this.ClientSize = new System.Drawing.Size(300, 250);
+            this.Controls.Add(this.iconPictureBox);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.passwordTextBox);
@@ -114,5 +127,6 @@ namespace VoiceIsolatorUploader
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.Button loginButton;
         private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.PictureBox iconPictureBox;
     }
 }

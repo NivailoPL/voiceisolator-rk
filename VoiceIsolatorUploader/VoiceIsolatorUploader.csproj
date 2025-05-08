@@ -6,8 +6,9 @@
     <Platforms>x86</Platforms>
     <RootNamespace>VoiceIsolatorUploader</RootNamespace>
     <AssemblyName>Izolator Głosu RK</AssemblyName>
+    <Version>1.1.0</Version>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>ICO PROGRAMY RK - VI.ico</ApplicationIcon>
+    <ApplicationIcon>Izolator Głosu RK.ico</ApplicationIcon>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup>

@@ -12,6 +12,9 @@ namespace VoiceIsolatorUploader
         public LoginForm()
         {
             InitializeComponent();
+    try {
+        this.Icon = new System.Drawing.Icon("Izolator Głosu RK.ico");
+    } catch {}
         }
 
         private void loginButton_Click(object sender, EventArgs e)

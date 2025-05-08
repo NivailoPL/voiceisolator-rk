@@ -11,6 +11,8 @@ namespace VoiceIsolatorUploader
 
         public MainForm(string appFolder)
         {
+            // Ustawienie ikony okna
+            this.Icon = Properties.Resources.AppIcon;
             InitializeComponent();
             this.appFolder = appFolder;
             // Inicjalizacja statusów i logów
@@ -21,9 +23,9 @@ namespace VoiceIsolatorUploader
             // Najprostsza opcja: ustaw logBox zawsze 5px pod restartButton
             logBox.Location = new System.Drawing.Point(logBox.Location.X, restartButton.Bottom + 5);
 
-            // PictureBox z logo (załaduj PNG z zasobów)
+            // Ustaw ikonę okna na nową ikonę programu
             try {
-                logoPictureBox.Image = Properties.Resources.LogoVI;
+                this.Icon = new System.Drawing.Icon("Izolator Głosu RK.ico");
             } catch {}
 
             // Przycisk restart domyślnie nieaktywny
@@ -55,19 +57,52 @@ namespace VoiceIsolatorUploader
                 statusLabel.Text = "Krok 1/5: Sprawdzanie pliku";
                 dragDropInput.Enabled = false;
 
+                // Dodaj animację ładowania
+                PictureBox loadingGif = new PictureBox();
+                loadingGif.Size = new System.Drawing.Size(35, 35);
+                loadingGif.SizeMode = PictureBoxSizeMode.StretchImage;
+                // Bezpieczne ładowanie animacji ładowania
+                try {
+                    // Najpierw spróbuj załadować load.gif z pliku obok exe
+                    if (System.IO.File.Exists("load.gif"))
+                    {
+                        loadingGif.Image = System.Drawing.Image.FromFile("load.gif");
+                    }
+                    else if (Properties.Resources.load != null)
+                    {
+                        // Jeśli nie ma pliku, spróbuj z zasobu (może być statyczny)
+                        loadingGif.Image = Properties.Resources.load;
+                    }
+                } catch { /* Jeśli nie ma zasobu, nie ustawiaj obrazka */ }
+                loadingGif.BackColor = System.Drawing.Color.Transparent;
+                loadingGif.Location = new System.Drawing.Point(
+                    dragDropInput.Width / 2 - 18,
+                    dragDropInput.Height / 2 - 18
+                );
+                loadingGif.Name = "loadingGif";
+                dragDropInput.Controls.Add(loadingGif);
+                loadingGif.BringToFront();
+
                 // Krok 1: Sprawdzenie pliku
                 if (!File.Exists(filePath) || !(filePath.EndsWith(".wav") || filePath.EndsWith(".mp3")))
                 {
                     logBox.SelectionColor = System.Drawing.Color.Red;
                     logBox.AppendText("Błędny format pliku!\n");
                     dragDropInput.Enabled = true;
+                    // Usuń animację ładowania
+                    var loadingGifControls1 = dragDropInput.Controls.Find("loadingGif", false);
+                    if (loadingGifControls1 != null && loadingGifControls1.Length > 0)
+                        dragDropInput.Controls.Remove(loadingGifControls1[0]);
                     restartButton.Enabled = true;
                     return;
                 }
 
                 statusLabel.Text = "Krok 2/5: Nawiązywanie połączenia z API";
                 logBox.AppendText("Nawiązywanie połączenia z API...\n");
+                
                 string apiKey = ApiClient.GetApiKeyFromConfig(appFolder);
+                logBox.SelectionColor = System.Drawing.Color.DarkGray;
+                
                 if (string.IsNullOrEmpty(apiKey))
                 {
                     logBox.SelectionColor = System.Drawing.Color.Red;
@@ -116,6 +151,10 @@ namespace VoiceIsolatorUploader
 
                 // --- Dodajemy ikonkę i label do dragDropOutput ---
                 dragDropOutput.Controls.Clear();
+                // Usuń animację ładowania
+                var loadingGifControls2 = dragDropInput.Controls.Find("loadingGif", false);
+                if (loadingGifControls2 != null && loadingGifControls2.Length > 0)
+                    dragDropInput.Controls.Remove(loadingGifControls2[0]);
                 try
                 {
                     var icon = System.Drawing.Icon.ExtractAssociatedIcon(outputPath)?.ToBitmap();
