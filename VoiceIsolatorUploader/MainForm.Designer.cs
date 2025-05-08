@@ -113,7 +113,7 @@ namespace VoiceIsolatorUploader
             this.dragDropInput.AllowDrop = true;
             this.dragDropInput.Location = new System.Drawing.Point(30, 100);
             this.dragDropInput.Name = "dragDropInput";
-            this.dragDropInput.Size = new System.Drawing.Size(230, 110);
+            this.dragDropInput.Size = new System.Drawing.Size(230, 100);
             this.dragDropInput.TabIndex = 2;
             this.dragDropInput.TabStop = false;
             this.dragDropInput.Text = "Przeciągnij plik (.wav, .mp3)";
@@ -125,7 +125,7 @@ namespace VoiceIsolatorUploader
             this.dragDropOutput.AllowDrop = true;
             this.dragDropOutput.Location = new System.Drawing.Point(270, 100);
             this.dragDropOutput.Name = "dragDropOutput";
-            this.dragDropOutput.Size = new System.Drawing.Size(230, 110);
+            this.dragDropOutput.Size = new System.Drawing.Size(230, 100);
             this.dragDropOutput.TabIndex = 3;
             this.dragDropOutput.TabStop = false;
             this.dragDropOutput.Text = "Przeciągnij gotowy plik";
@@ -135,7 +135,7 @@ namespace VoiceIsolatorUploader
             // 
             // logBox
             // 
-            this.logBox.Location = new System.Drawing.Point(30, 245);
+            this.logBox.Location = new System.Drawing.Point(30, 255);
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
             this.logBox.Size = new System.Drawing.Size(470, 110);
@@ -144,10 +144,9 @@ namespace VoiceIsolatorUploader
             // 
             // restartButton
             // 
-            this.restartButton.Location = new System.Drawing.Point(0, 200);
-
+            this.restartButton.Location = new System.Drawing.Point(325, 210);
             this.restartButton.Name = "restartButton";
-            this.restartButton.Size = new System.Drawing.Size(512, 40);
+            this.restartButton.Size = new System.Drawing.Size(150, 30);
             this.restartButton.TabIndex = 5;
             this.restartButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.restartButton.Text = "ROZPOCZNIJ PONOWNIE";
