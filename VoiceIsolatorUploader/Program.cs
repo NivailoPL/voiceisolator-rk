@@ -71,8 +71,22 @@ namespace VoiceIsolatorUploader
                 {
                     if (login.ShowDialog() != DialogResult.OK || !login.LoginSuccess)
                         return;
-                    // Zapisz datę ważności logowania na 7 dni
-                    var newConfig = new { api_key = "", login_saved_until = DateTime.Now.AddDays(7).ToString("o") };
+                    
+                    // Zachowaj istniejący klucz API, jeśli istnieje
+                    string existingApiKey = "";
+                    if (File.Exists(configPath))
+                    {
+                        try
+                        {
+                            var cfg = System.Text.Json.JsonDocument.Parse(File.ReadAllText(configPath)).RootElement;
+                            if (cfg.TryGetProperty("api_key", out var apiKeyElem))
+                                existingApiKey = apiKeyElem.GetString();
+                        }
+                        catch { }
+                    }
+                    
+                    // Zapisz datę ważności logowania na 7 dni zachowując istniejący klucz API
+                    var newConfig = new { api_key = existingApiKey, login_saved_until = DateTime.Now.AddDays(7).ToString("o") };
                     var json = System.Text.Json.JsonSerializer.Serialize(newConfig);
                     File.WriteAllText(configPath, json);
                 }

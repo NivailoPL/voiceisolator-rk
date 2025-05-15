@@ -57,10 +57,12 @@ namespace VoiceIsolatorUploader
                 }
                 catch { }
             }
-            // Zapisujemy tylko nowy api_key, login_saved_until zostaje bez zmian
+            // Zapisujemy nowy api_key i aktualizujemy login_saved_until na 7 dni
             var newConfig = new System.Collections.Generic.Dictionary<string, string>();
             newConfig["api_key"] = ConfigManager.EncodeApiKey(apiKey);
-            if (!string.IsNullOrEmpty(loginUntil)) newConfig["login_saved_until"] = loginUntil;
+            
+            // Ustawiamy datę wygaśnięcia na 7 dni od teraz
+            newConfig["login_saved_until"] = DateTime.Now.AddDays(7).ToString("o");
             var json = System.Text.Json.JsonSerializer.Serialize(newConfig);
             System.IO.File.WriteAllText(configPath, json);
             this.DialogResult = DialogResult.OK;
