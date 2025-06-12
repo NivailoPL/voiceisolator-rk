@@ -5,21 +5,23 @@ namespace VoiceIsolatorUploader
 {
     public partial class LoginForm : Form
     {
-        public string Username => usernameTextBox.Text;
-        public string Password => passwordTextBox.Text;
         public bool LoginSuccess { get; private set; } = false;
 
         public LoginForm()
         {
             InitializeComponent();
-    try {
-        // Ikona ładowana przez MainForm z folderu Properties
-    } catch {}
+            try {
+                // Ikona ładowana przez MainForm z folderu Properties
+            } catch {}
+
+            this.Load += LoginForm_Load;
         }
 
-        private void loginButton_Click(object sender, EventArgs e)
+        private void LoginForm_Load(object sender, EventArgs e)
         {
-            if (usernameTextBox.Text == "newsroom" && passwordTextBox.Text == "newsroom123")
+            // Sprawdź zmienną środowiskową przy załadowaniu formularza
+            string isolatorEnv = Environment.GetEnvironmentVariable("IZOLATOR");
+            if (isolatorEnv == "izolator")
             {
                 LoginSuccess = true;
                 this.DialogResult = DialogResult.OK;
@@ -27,9 +29,15 @@ namespace VoiceIsolatorUploader
             }
             else
             {
-                errorLabel.Text = "Błędny login lub hasło!";
-                errorLabel.ForeColor = System.Drawing.Color.Red;
+                messageLabel.Text = "Wygląda na to, że nie masz uprawnień do korzystania z Izolatora Głosu RK! Jeśli uważasz, że jest to błąd, skontaktuj się z WW.";
+                messageLabel.ForeColor = System.Drawing.Color.Red;
             }
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

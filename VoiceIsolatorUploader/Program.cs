@@ -45,51 +45,12 @@ namespace VoiceIsolatorUploader
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Sprawdź ważność logowania w config.json
-            TempManager.EnsureTempFolder(appFolder); // przekazujemy appFolder
-            bool loginRequired = true;
-            if (File.Exists(configPath))
-            {
-                try
-                {
-                    var cfg = System.Text.Json.JsonDocument.Parse(File.ReadAllText(configPath)).RootElement;
-                    if (cfg.TryGetProperty("login_saved_until", out var loginUntil))
-                    {
-                        if (DateTime.TryParse(loginUntil.GetString(), out var dt))
-                        {
-                            if (dt > DateTime.Now)
-                                loginRequired = false;
-                        }
-                    }
-                }
-                catch { }
-            }
+            TempManager.EnsureTempFolder(appFolder);
 
-            if (loginRequired)
+            using (var login = new LoginForm())
             {
-                using (var login = new LoginForm())
-                {
-                    if (login.ShowDialog() != DialogResult.OK || !login.LoginSuccess)
-                        return;
-                    
-                    // Zachowaj istniejący klucz API, jeśli istnieje
-                    string existingApiKey = "";
-                    if (File.Exists(configPath))
-                    {
-                        try
-                        {
-                            var cfg = System.Text.Json.JsonDocument.Parse(File.ReadAllText(configPath)).RootElement;
-                            if (cfg.TryGetProperty("api_key", out var apiKeyElem))
-                                existingApiKey = apiKeyElem.GetString();
-                        }
-                        catch { }
-                    }
-                    
-                    // Zapisz datę ważności logowania na 7 dni zachowując istniejący klucz API
-                    var newConfig = new { api_key = existingApiKey, login_saved_until = DateTime.Now.AddDays(7).ToString("o") };
-                    var json = System.Text.Json.JsonSerializer.Serialize(newConfig);
-                    File.WriteAllText(configPath, json);
-                }
+                if (login.ShowDialog() != DialogResult.OK || !login.LoginSuccess)
+                    return;
             }
 
             Application.Run(new MainForm(appFolder));
