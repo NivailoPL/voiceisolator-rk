@@ -39,15 +39,6 @@ namespace VoiceIsolatorUploader
                 return;
             }
 
-            // Sprawdź czy zahashowane API istnieje w słowniku mapowań
-            string decodedApi = ConfigManager.DecodeApiKey(apiKey);
-            if (string.IsNullOrEmpty(decodedApi))
-            {
-                errorLabel.Text = "Nieprawidłowy klucz API!";
-                errorLabel.ForeColor = System.Drawing.Color.Red;
-                return;
-            }
-
             // Zapisz do config.json w AppData
             string configPath = System.IO.Path.Combine(appFolder, "config.json");
             var newConfig = new System.Collections.Generic.Dictionary<string, string>

@@ -86,8 +86,7 @@ namespace VoiceIsolatorUploader
                 var cfg = JsonDocument.Parse(File.ReadAllText(configPath)).RootElement;
                 if (cfg.TryGetProperty("api_key", out var apiKeyElem))
                 {
-                    string hashedKey = apiKeyElem.GetString();
-                    return ConfigManager.DecodeApiKey(hashedKey);
+                    return apiKeyElem.GetString();
                 }
             }
             catch { }
