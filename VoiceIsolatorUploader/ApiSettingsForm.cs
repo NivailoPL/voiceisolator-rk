@@ -22,7 +22,7 @@ namespace VoiceIsolatorUploader
                     var cfg = System.Text.Json.JsonDocument.Parse(System.IO.File.ReadAllText(configPath)).RootElement;
                     if (cfg.TryGetProperty("api_key", out var apiKey))
                     {
-                        apiKeyTextBox.Text = ConfigManager.DecodeApiKey(apiKey.GetString());
+                        apiKeyTextBox.Text = apiKey.GetString();
                     }
                 }
                 catch { }
@@ -31,12 +31,6 @@ namespace VoiceIsolatorUploader
 
         private void setApiButton_Click(object sender, EventArgs e)
         {
-            if (adminPasswordTextBox.Text != "admin321")
-            {
-                errorLabel.Text = "Błędne hasło administratora!";
-                errorLabel.ForeColor = System.Drawing.Color.Red;
-                return;
-            }
             string apiKey = apiKeyTextBox.Text.Trim();
             if (string.IsNullOrEmpty(apiKey))
             {
@@ -44,25 +38,23 @@ namespace VoiceIsolatorUploader
                 errorLabel.ForeColor = System.Drawing.Color.Red;
                 return;
             }
+
+            // Sprawdź czy zahashowane API istnieje w słowniku mapowań
+            string decodedApi = ConfigManager.DecodeApiKey(apiKey);
+            if (string.IsNullOrEmpty(decodedApi))
+            {
+                errorLabel.Text = "Nieprawidłowy klucz API!";
+                errorLabel.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
             // Zapisz do config.json w AppData
             string configPath = System.IO.Path.Combine(appFolder, "config.json");
-            string loginUntil = null;
-            if (System.IO.File.Exists(configPath))
+            var newConfig = new System.Collections.Generic.Dictionary<string, string>
             {
-                try
-                {
-                    var cfg = System.Text.Json.JsonDocument.Parse(System.IO.File.ReadAllText(configPath)).RootElement;
-                    if (cfg.TryGetProperty("login_saved_until", out var loginUntilElem))
-                        loginUntil = loginUntilElem.GetString();
-                }
-                catch { }
-            }
-            // Zapisujemy nowy api_key i aktualizujemy login_saved_until na 7 dni
-            var newConfig = new System.Collections.Generic.Dictionary<string, string>();
-            newConfig["api_key"] = ConfigManager.EncodeApiKey(apiKey);
+                ["api_key"] = apiKey
+            };
             
-            // Ustawiamy datę wygaśnięcia na 7 dni od teraz
-            newConfig["login_saved_until"] = DateTime.Now.AddDays(7).ToString("o");
             var json = System.Text.Json.JsonSerializer.Serialize(newConfig);
             System.IO.File.WriteAllText(configPath, json);
             this.DialogResult = DialogResult.OK;

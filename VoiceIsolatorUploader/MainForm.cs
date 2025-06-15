@@ -2,6 +2,7 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace VoiceIsolatorUploader
 {
@@ -31,13 +32,22 @@ namespace VoiceIsolatorUploader
 
         private void UpdateApiStatus()
         {
-            string apiKey = ApiClient.GetApiKeyFromConfig(appFolder);
-            if (!string.IsNullOrEmpty(apiKey))
+            string configPath = Path.Combine(appFolder, "config.json");
+            try
             {
-                apiStatusLabel.Text = "API: OK!";
-                apiStatusLabel.ForeColor = System.Drawing.Color.Green;
+                var cfg = JsonDocument.Parse(File.ReadAllText(configPath)).RootElement;
+                if (cfg.TryGetProperty("api_key", out var apiKeyElem) && !string.IsNullOrEmpty(apiKeyElem.GetString()))
+                {
+                    apiStatusLabel.Text = "API: OK";
+                    apiStatusLabel.ForeColor = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    apiStatusLabel.Text = "API: BRAK!";
+                    apiStatusLabel.ForeColor = System.Drawing.Color.Red;
+                }
             }
-            else
+            catch
             {
                 apiStatusLabel.Text = "API: BRAK!";
                 apiStatusLabel.ForeColor = System.Drawing.Color.Red;
@@ -97,7 +107,18 @@ namespace VoiceIsolatorUploader
                 statusLabel.Text = "Krok 2/5: Nawiązywanie połączenia z API";
                 logBox.AppendText("Nawiązywanie połączenia z API...\n");
                 
-                string apiKey = ApiClient.GetApiKeyFromConfig(appFolder);
+                string configPath = Path.Combine(appFolder, "config.json");
+                string apiKey = null;
+                try
+                {
+                    var cfg = JsonDocument.Parse(File.ReadAllText(configPath)).RootElement;
+                    if (cfg.TryGetProperty("api_key", out var apiKeyElem))
+                    {
+                        apiKey = apiKeyElem.GetString();
+                    }
+                }
+                catch { }
+                
                 logBox.SelectionColor = System.Drawing.Color.DarkGray;
                 
                 if (string.IsNullOrEmpty(apiKey))

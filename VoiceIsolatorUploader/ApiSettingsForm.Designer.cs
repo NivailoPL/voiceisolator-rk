@@ -14,7 +14,6 @@ namespace VoiceIsolatorUploader
         private void InitializeComponent()
         {
             this.apiKeyTextBox = new System.Windows.Forms.TextBox();
-            this.adminPasswordTextBox = new System.Windows.Forms.TextBox();
             this.setApiButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
@@ -28,18 +27,9 @@ namespace VoiceIsolatorUploader
             this.apiKeyTextBox.Size = new System.Drawing.Size(250, 23);
             this.apiKeyTextBox.TabIndex = 0;
             // 
-            // adminPasswordTextBox
-            // 
-            this.adminPasswordTextBox.Location = new System.Drawing.Point(30, 70);
-            this.adminPasswordTextBox.Name = "adminPasswordTextBox";
-            // this.adminPasswordTextBox.PlaceholderText = "Hasło administratora";
-            this.adminPasswordTextBox.Size = new System.Drawing.Size(250, 23);
-            this.adminPasswordTextBox.TabIndex = 1;
-            this.adminPasswordTextBox.PasswordChar = '*';
-            // 
             // setApiButton
             // 
-            this.setApiButton.Location = new System.Drawing.Point(30, 110);
+            this.setApiButton.Location = new System.Drawing.Point(30, 70);
             this.setApiButton.Name = "setApiButton";
             this.setApiButton.Size = new System.Drawing.Size(120, 30);
             this.setApiButton.TabIndex = 2;
@@ -49,7 +39,7 @@ namespace VoiceIsolatorUploader
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(160, 110);
+            this.cancelButton.Location = new System.Drawing.Point(160, 70);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(120, 30);
             this.cancelButton.TabIndex = 3;
@@ -60,7 +50,7 @@ namespace VoiceIsolatorUploader
             // errorLabel
             // 
             this.errorLabel.AutoSize = true;
-            this.errorLabel.Location = new System.Drawing.Point(30, 150);
+            this.errorLabel.Location = new System.Drawing.Point(30, 110);
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(0, 15);
             this.errorLabel.TabIndex = 4;
@@ -69,11 +59,10 @@ namespace VoiceIsolatorUploader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(320, 200);
+            this.ClientSize = new System.Drawing.Size(320, 150);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.setApiButton);
-            this.Controls.Add(this.adminPasswordTextBox);
             this.Controls.Add(this.apiKeyTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -85,7 +74,6 @@ namespace VoiceIsolatorUploader
             this.PerformLayout();
         }
         private System.Windows.Forms.TextBox apiKeyTextBox;
-        private System.Windows.Forms.TextBox adminPasswordTextBox;
         private System.Windows.Forms.Button setApiButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label errorLabel;
