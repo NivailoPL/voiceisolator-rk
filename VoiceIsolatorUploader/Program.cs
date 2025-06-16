@@ -2,6 +2,7 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.Json;
+using System.Reflection;
 
 namespace VoiceIsolatorUploader
 {
@@ -10,14 +11,12 @@ namespace VoiceIsolatorUploader
         [STAThread]
         static void Main()
         {
-            // --- Tworzenie folderu temp i pliku config.json w %appdata% ---
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string appFolder = Path.Combine(appDataPath, "VoiceIsolatorUploader");
+            // --- Tworzenie folderu temp i pliku config.json w folderze aplikacji ---
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string appFolder = Path.GetDirectoryName(exePath);
             string tempFolder = Path.Combine(appFolder, "temp");
             string configPath = Path.Combine(appFolder, "config.json");
 
-            if (!Directory.Exists(appFolder))
-                Directory.CreateDirectory(appFolder);
             if (!Directory.Exists(tempFolder))
                 Directory.CreateDirectory(tempFolder);
             if (!File.Exists(configPath))

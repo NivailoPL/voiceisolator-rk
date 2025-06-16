@@ -45,6 +45,10 @@ ScaffoldingReadMe.txt
 *.swp
 *~
 
+# Application runtime files
+temp/
+config.json
+fatal_error.log
 
 # Don't ignore config.json if you need it for runtime
 # If it's sensitive (API keys etc.), rename to config.example.json and ignore the real one
