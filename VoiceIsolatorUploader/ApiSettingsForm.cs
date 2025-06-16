@@ -29,7 +29,7 @@ namespace VoiceIsolatorUploader
             }
         }
 
-        private void setApiButton_Click(object sender, EventArgs e)
+        private async void setApiButton_Click(object sender, EventArgs e)
         {
             string apiKey = apiKeyTextBox.Text.Trim();
             if (string.IsNullOrEmpty(apiKey))
@@ -48,6 +48,20 @@ namespace VoiceIsolatorUploader
             
             var json = System.Text.Json.JsonSerializer.Serialize(newConfig);
             System.IO.File.WriteAllText(configPath, json);
+
+            // Spróbuj zsynchronizować z plikiem sieciowym
+            var (success, message) = await ApiKeyManager.SyncApiKeyWithNetworkAsync(configPath);
+            if (!success)
+            {
+                // Logujemy błąd synchronizacji
+                string logPath = Path.Combine(appFolder, "api_sync.log");
+                try
+                {
+                    File.AppendAllText(logPath, $"[{DateTime.Now}] {message}\n");
+                }
+                catch { }
+            }
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

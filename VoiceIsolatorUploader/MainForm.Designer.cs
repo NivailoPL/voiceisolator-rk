@@ -37,6 +37,7 @@ namespace VoiceIsolatorUploader
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.apiStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.userStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.dragDropInput = new System.Windows.Forms.GroupBox();
             this.dragDropOutput = new System.Windows.Forms.GroupBox();
             this.logBox = new System.Windows.Forms.RichTextBox();
@@ -88,7 +89,8 @@ namespace VoiceIsolatorUploader
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
-            this.apiStatusLabel});
+            this.apiStatusLabel,
+            this.userStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 360);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(512, 22);
@@ -107,6 +109,14 @@ namespace VoiceIsolatorUploader
             this.apiStatusLabel.Size = new System.Drawing.Size(80, 17);
             this.apiStatusLabel.Text = "API: BRAK!";
             this.apiStatusLabel.ForeColor = System.Drawing.Color.Red;
+            // 
+            // userStatusLabel
+            //
+            this.userStatusLabel.Name = "userStatusLabel";
+            this.userStatusLabel.Size = new System.Drawing.Size(80, 17);
+            this.userStatusLabel.Text = "";
+            this.userStatusLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.userStatusLabel.Visible = false;
             // 
             // dragDropInput
             // 
@@ -200,6 +210,7 @@ this.barPictureBox.Image = global::VoiceIsolatorUploader.Properties.Resources.BA
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripStatusLabel apiStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel userStatusLabel;
         private System.Windows.Forms.GroupBox dragDropInput;
         private System.Windows.Forms.GroupBox dragDropOutput;
         private System.Windows.Forms.RichTextBox logBox;

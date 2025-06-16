@@ -19,12 +19,11 @@ namespace VoiceIsolatorUploader
             // Inicjalizacja statusów i logów
             statusLabel.Text = "Krok 1/5";
             UpdateApiStatus();
+            UpdateUserStatus();
             dragDropOutput.Enabled = false;
 
             // Najprostsza opcja: ustaw logBox zawsze 5px pod restartButton
             logBox.Location = new System.Drawing.Point(logBox.Location.X, restartButton.Bottom + 5);
-
-
 
             // Przycisk restart domyślnie nieaktywny
             restartButton.Enabled = false;
@@ -51,6 +50,20 @@ namespace VoiceIsolatorUploader
             {
                 apiStatusLabel.Text = "API: BRAK!";
                 apiStatusLabel.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
+        private void UpdateUserStatus()
+        {
+            string username = Environment.GetEnvironmentVariable("NWUSERNAME");
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                userStatusLabel.Text = username;
+                userStatusLabel.Visible = true;
+            }
+            else
+            {
+                userStatusLabel.Visible = false;
             }
         }
 

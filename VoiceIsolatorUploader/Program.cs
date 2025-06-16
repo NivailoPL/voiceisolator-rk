@@ -46,7 +46,7 @@ namespace VoiceIsolatorUploader
 
             TempManager.EnsureTempFolder(appFolder);
 
-            using (var login = new LoginForm())
+            using (var login = new LoginForm(appFolder))
             {
                 if (login.ShowDialog() != DialogResult.OK || !login.LoginSuccess)
                     return;
